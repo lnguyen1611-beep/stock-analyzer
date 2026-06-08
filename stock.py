@@ -4,6 +4,7 @@ import streamlit as st
 st.title("📈 Stock Analyzer")
 
 tickers = st.text_input("Enter stocks (e.g. NVDA, AAPL, TSLA)")
+period = st.radio("Time Period", ["1d", "1wk", "1mo"], horizontal=True)
 
 if st.button("Analyze"):
     for symbol in tickers.upper().split(","):
@@ -13,5 +14,5 @@ if st.button("Analyze"):
         st.subheader(info.get("longName", symbol))
         st.write("💰 Price: $", info.get("currentPrice", "N/A"))
         st.write("📊 Change:", round(info.get("regularMarketChangePercent", 0), 2), "%")
-        st.line_chart(stock.history(period="1mo")["Close"])
+        st.line_chart(stock.history(period=period)["Close"])
         st.divider()
